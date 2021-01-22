@@ -1,0 +1,125 @@
+from PyQt5.QtCore import QDir
+from PyQt5.QtGui import QIntValidator, QDoubleValidator
+from PyQt5.QtWidgets import QMainWindow, QApplication, QFileDialog
+
+from ui_arayuz import Ui_MainWindow
+
+
+class MainWindow(QMainWindow):
+    def __init__(self):
+        super().__init__()
+        self.ui = Ui_MainWindow()
+        self.ui.setupUi(self)
+        self.self_setup_ui()
+        self.initSlots()
+        self.initParameters()
+        self.ui.btn_pdf_analiz_yap.setEnabled(True)
+        self.ui.listWidget.setStyleSheet("color: rgb(255, 255, 255);")
+
+    def control(self):
+        if len(self.ui.txt_dosya_yolu.text()) < 5:
+            self.ui.btn_pdf_analiz_yap.setEnabled(False)
+        else:
+            self.ui.btn_pdf_analiz_yap.setEnabled(True)
+
+    def initParameters(self):
+        self.icindekiler_listesi_sayfa_numaralari = []
+        self.sekiller_listesi_sayfa_numaralari = []
+        self.tablolar_listesi_sayfa_numaralari = []
+        self.denklemler_listesi_sayfa_numaralari = []
+        self.referanslar_listesi_sayfa_numaralari = []
+        self.cizelgeler_listesi_sayfa_numaralari = []
+        self.giris_sayfa_numaralari = []
+        self.tez_baslangic_sayfasi = []
+        self.baslik_sayfasi = []
+
+    def initSlots(self):
+        self.ui.btn_dosya_sec.clicked.connect(self.dosya_sec)
+        self.ui.action_dosya_sec.triggered.connect(self.dosya_sec)
+        self.ui.btn_pdf_analiz_yap.clicked.connect(self.getParameters)
+
+    def self_setup_ui(self):
+        self.ui.txt_dosya_yolu.setEnabled(False)
+        self.ui.txt_no_giris.setValidator(QDoubleValidator())
+        self.ui.txt_no_sekiller.setValidator(QDoubleValidator())
+        self.ui.txt_no_baslik.setValidator(QDoubleValidator())
+        self.ui.txt_no_cizelge.setValidator(QDoubleValidator())
+        self.ui.txt_no_tablolar.setValidator(QDoubleValidator())
+        self.ui.txt_no_baslangic.setValidator(QDoubleValidator())
+        self.ui.txt_no_denklemler.setValidator(QDoubleValidator())
+        self.ui.txt_no_icindekiler.setValidator(QDoubleValidator())
+        self.ui.txt_no_referans.setValidator(QDoubleValidator())
+
+    def dosya_sec(self):
+        fname = QFileDialog.getOpenFileName(self, 'Open file',
+                                            'c:\\', "Image files (*.pdf)")
+        self.tez_yolu = fname[0]
+        self.ui.txt_dosya_yolu.setText(self.tez_yolu)
+        self.control()
+
+    def getParameters(self):
+        if len(self.ui.txt_no_giris.text()) > 0:
+            for i in self.ui.txt_no_giris.text().split(","):
+                self.icindekiler_listesi_sayfa_numaralari.append(int(i))
+        if len(self.ui.txt_no_referans.text()) > 0:
+            for i in self.ui.txt_no_referans.text().split(","):
+                self.referanslar_listesi_sayfa_numaralari.append(int(i))
+        if len(self.ui.txt_no_baslik.text()) > 0:
+            for i in self.ui.txt_no_baslik.text().split(","):
+                self.referanslar_listesi_sayfa_numaralari.append(int(i))
+        if len(self.ui.txt_no_cizelge.text()) > 0:
+            for i in self.ui.txt_no_cizelge.text().split(","):
+                self.cizelgeler_listesi_sayfa_numaralari.append(int(i))
+        if len(self.ui.txt_no_icindekiler.text()) > 0:
+            for i in self.ui.txt_no_icindekiler.text().split(","):
+                self.icindekiler_listesi_sayfa_numaralari.append(int(i))
+        if len(self.ui.txt_no_denklemler.text()) > 0:
+            for i in self.ui.txt_no_denklemler.text().split(","):
+                self.denklemler_listesi_sayfa_numaralari.append(int(i))
+        if len(self.ui.txt_no_baslangic.text()) > 0:
+            for i in self.ui.txt_no_baslangic.text().split(","):
+                self.tez_baslangic_sayfasi.append(int(i))
+        if len(self.ui.txt_no_tablolar.text()) > 0:
+            for i in self.ui.txt_no_tablolar.text().split(","):
+                self.tablolar_listesi_sayfa_numaralari.append(int(i))
+        if len(self.ui.txt_no_sekiller.text()) > 0:
+            for i in self.ui.txt_no_sekiller.text().split(","):
+                self.sekiller_listesi_sayfa_numaralari.append(int(i))
+
+        self.analiz_baslat()
+
+    def analiz_baslat(self):
+        from HataKontrol import HataKontrolleri
+        from TezAnalizi import PdfIslemleri
+        pdf_islemleri = PdfIslemleri(
+            self.baslik_sayfasi,
+            self.tez_yolu,
+            self.icindekiler_listesi_sayfa_numaralari,
+            self.sekiller_listesi_sayfa_numaralari,
+            self.tablolar_listesi_sayfa_numaralari,
+            self.denklemler_listesi_sayfa_numaralari,
+            self.cizelgeler_listesi_sayfa_numaralari,
+            self.referanslar_listesi_sayfa_numaralari,
+            self.giris_sayfa_numaralari,
+            self.tez_baslangic_sayfasi
+        )
+        tez = pdf_islemleri.Tez_Nesnesi_Olustur()
+        hata_kontrol_nesnesi = HataKontrolleri(tez, self.tez_yolu)
+        self.result, self.message = hata_kontrol_nesnesi.Kontrol_Baslat()
+        self.message2 = pdf_islemleri.messageBox
+        self.addItemToListWidget()
+
+    def addItemToListWidget(self):
+        self.ui.listWidget.addItems(self.message2)
+        self.ui.listWidget.addItems(self.message)
+        self.ui.listWidget.addItem(str(self.result))
+
+
+if __name__ == '__main__':
+    import sys
+
+    app = QApplication(sys.argv)
+    app.setStyle("fusion")
+    loginWindow = MainWindow()
+    loginWindow.show()
+    sys.exit(app.exec_())
