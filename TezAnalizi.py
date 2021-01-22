@@ -58,6 +58,17 @@ class PdfIslemleri:
         self.tez_nesnesi = fitz.open(self.tez_yolu)
         self.Tezi_Parcala()
 
+    def Tez_Nesnesi_Olustur(self):
+        return Tez(self.baslik,
+                   self.icindekiler_nesnesi,
+                   self.sekiller_nesnesi,
+                   self.tablolar_nesnesi,
+                   self.denklemler_nesnesi,
+                   self.cizelgeler_nesnesi,
+                   self.referanslar_nesnesi,
+                   self.giris_nesnesi,
+                   self.icerik_nesnesi)
+
     def Tezi_Parcala(self):
         en_buyuk_giris_sayfasi = 0
         if (len(self.icindekiler_listesi_sayfa_numaralari) > 0):
@@ -84,7 +95,7 @@ class PdfIslemleri:
                             baslik = guncel_satir
                 if (en_buyuk_giris_sayfasi < sayfa_numarasi):
                     en_buyuk_giris_sayfasi = sayfa_numarasi
-            # print(self.icindekiler_nesnesi.icindekiler_listesi)
+            print(self.icindekiler_nesnesi.icindekiler_listesi)
             print("İçerik Kısmı Derlendi...")
             self.messageBox.append("İçerik Kısmı Derlendi...")
 
@@ -112,7 +123,7 @@ class PdfIslemleri:
                             baslik = guncel_satir
                 if (en_buyuk_giris_sayfasi < sayfa_numarasi):
                     en_buyuk_giris_sayfasi = sayfa_numarasi
-            # print(self.sekiller_nesnesi.sekiller_listesi)
+            print(self.sekiller_nesnesi.sekiller_listesi)
             print("Şekiller Listesi Derlendi...")
             self.messageBox.append("Şekiller Listesi Derlendi...")
 
@@ -251,41 +262,3 @@ class PdfIslemleri:
         # print(self.baslik)
         print("Başlık Kısmı Başarı İle Derlendi...")
         self.messageBox.append("Başlık Kısmı Başarı İle Derlendi...")
-
-    def Tez_Nesnesi_Olustur(self):
-        return Tez(self.baslik,
-                   self.icindekiler_nesnesi,
-                   self.sekiller_nesnesi,
-                   self.tablolar_nesnesi,
-                   self.denklemler_nesnesi,
-                   self.cizelgeler_nesnesi,
-                   self.referanslar_nesnesi,
-                   self.giris_nesnesi,
-                   self.icerik_nesnesi)
-
-# tez_yolu = "C:\TezOrnegi.pdf"
-# icindekiler_listesi_sayfa_numaralari = [7, 8]
-# sekiller_listesi_sayfa_numaralari = [11]
-# tablolar_listesi_sayfa_numaralari = []
-# denklemler_listesi_sayfa_numaralari = []
-# referanslar_listesi_sayfa_numaralari = [105, 106, 107, 108, 109, 110, 111, 112]
-# cizelgeler_listesi_sayfa_numaralari = [9, 10]
-# giris_sayfa_numaralari = [12, 13, 14]
-# tez_baslangic_sayfasi = 12
-# baslik_sayfasi = 1
-#
-# pdf_islemleri = PdfIslemleri(baslik_sayfasi,
-#                              tez_yolu,
-#                              icindekiler_listesi_sayfa_numaralari,
-#                              sekiller_listesi_sayfa_numaralari,
-#                              tablolar_listesi_sayfa_numaralari,
-#                              denklemler_listesi_sayfa_numaralari,
-#                              cizelgeler_listesi_sayfa_numaralari,
-#                              referanslar_listesi_sayfa_numaralari,
-#                              giris_sayfa_numaralari,
-#                              tez_baslangic_sayfasi)
-#
-# tez = pdf_islemleri.Tez_Nesnesi_Olustur()
-#
-# hata_kontrol_nesnesi = HataKontrolleri(tez, tez_yolu)
-# print(hata_kontrol_nesnesi.Kontrol_Baslat())

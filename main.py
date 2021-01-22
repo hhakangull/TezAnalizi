@@ -1,6 +1,6 @@
 from PyQt5.QtCore import QDir
 from PyQt5.QtGui import QIntValidator, QDoubleValidator
-from PyQt5.QtWidgets import QMainWindow, QApplication, QFileDialog
+from PyQt5.QtWidgets import QMainWindow, QApplication, QFileDialog, QMessageBox
 
 from ui_arayuz import Ui_MainWindow
 
@@ -13,6 +13,7 @@ class MainWindow(QMainWindow):
         self.self_setup_ui()
         self.initSlots()
         self.initParameters()
+        self.test()
         self.ui.btn_pdf_analiz_yap.setEnabled(True)
         self.ui.listWidget.setStyleSheet("color: rgb(255, 255, 255);")
 
@@ -30,13 +31,26 @@ class MainWindow(QMainWindow):
         self.referanslar_listesi_sayfa_numaralari = []
         self.cizelgeler_listesi_sayfa_numaralari = []
         self.giris_sayfa_numaralari = []
-        self.tez_baslangic_sayfasi = []
+        self.tez_baslangic_sayfasi = None
         self.baslik_sayfasi = []
 
     def initSlots(self):
         self.ui.btn_dosya_sec.clicked.connect(self.dosya_sec)
         self.ui.action_dosya_sec.triggered.connect(self.dosya_sec)
         self.ui.btn_pdf_analiz_yap.clicked.connect(self.getParameters)
+        self.ui.action_kilavuz.triggered.connect(self.kilavuz)
+
+    def kilavuz(self):
+        print("asdasd")
+        print("test")
+        self.msg = QMessageBox()
+        self.msg.setIcon(QMessageBox.Information)
+        self.msg.setText("UZUN Birşeyler yazılacak                                                      ")
+        self.msg.setInformativeText("This is additional information")
+        self.msg.setWindowTitle("Kullanım Kılavuzu")
+        self.msg.setDetailedText(
+            "The details are as follows:\nThe details are as follows:\nThe details are as follows:")
+        self.msg.show()
 
     def self_setup_ui(self):
         self.ui.txt_dosya_yolu.setEnabled(False)
@@ -50,6 +64,17 @@ class MainWindow(QMainWindow):
         self.ui.txt_no_icindekiler.setValidator(QDoubleValidator())
         self.ui.txt_no_referans.setValidator(QDoubleValidator())
 
+    def test(self):
+        self.ui.txt_no_giris.setText("12,13,14")
+        self.ui.txt_no_baslik.setText("1")
+        self.ui.txt_no_cizelge.setText("9,10")
+        self.ui.txt_no_sekiller.setText("11")
+        self.ui.txt_no_tablolar.setText("")
+        self.ui.txt_no_baslangic.setText("12")
+        self.ui.txt_no_denklemler.setText("")
+        self.ui.txt_no_icindekiler.setText("7,8")
+        self.ui.txt_no_referans.setText("105, 106, 107, 108, 109, 110, 111, 112")
+
     def dosya_sec(self):
         fname = QFileDialog.getOpenFileName(self, 'Open file',
                                             'c:\\', "Image files (*.pdf)")
@@ -58,30 +83,37 @@ class MainWindow(QMainWindow):
         self.control()
 
     def getParameters(self):
+
         if len(self.ui.txt_no_giris.text()) > 0:
             for i in self.ui.txt_no_giris.text().split(","):
-                self.icindekiler_listesi_sayfa_numaralari.append(int(i))
+                self.giris_sayfa_numaralari.append(int(i))
+
         if len(self.ui.txt_no_referans.text()) > 0:
             for i in self.ui.txt_no_referans.text().split(","):
                 self.referanslar_listesi_sayfa_numaralari.append(int(i))
+
         if len(self.ui.txt_no_baslik.text()) > 0:
-            for i in self.ui.txt_no_baslik.text().split(","):
-                self.referanslar_listesi_sayfa_numaralari.append(int(i))
+            self.baslik_sayfasi = int(self.ui.txt_no_baslik.text())
+
         if len(self.ui.txt_no_cizelge.text()) > 0:
             for i in self.ui.txt_no_cizelge.text().split(","):
                 self.cizelgeler_listesi_sayfa_numaralari.append(int(i))
+
         if len(self.ui.txt_no_icindekiler.text()) > 0:
             for i in self.ui.txt_no_icindekiler.text().split(","):
                 self.icindekiler_listesi_sayfa_numaralari.append(int(i))
+
         if len(self.ui.txt_no_denklemler.text()) > 0:
             for i in self.ui.txt_no_denklemler.text().split(","):
                 self.denklemler_listesi_sayfa_numaralari.append(int(i))
+
         if len(self.ui.txt_no_baslangic.text()) > 0:
-            for i in self.ui.txt_no_baslangic.text().split(","):
-                self.tez_baslangic_sayfasi.append(int(i))
+            self.tez_baslangic_sayfasi = int(self.ui.txt_no_baslangic.text())
+
         if len(self.ui.txt_no_tablolar.text()) > 0:
             for i in self.ui.txt_no_tablolar.text().split(","):
                 self.tablolar_listesi_sayfa_numaralari.append(int(i))
+
         if len(self.ui.txt_no_sekiller.text()) > 0:
             for i in self.ui.txt_no_sekiller.text().split(","):
                 self.sekiller_listesi_sayfa_numaralari.append(int(i))
@@ -106,13 +138,18 @@ class MainWindow(QMainWindow):
         tez = pdf_islemleri.Tez_Nesnesi_Olustur()
         hata_kontrol_nesnesi = HataKontrolleri(tez, self.tez_yolu)
         self.result, self.message = hata_kontrol_nesnesi.Kontrol_Baslat()
+        print(self.result)
+        print(type(self.result))
         self.message2 = pdf_islemleri.messageBox
         self.addItemToListWidget()
 
     def addItemToListWidget(self):
         self.ui.listWidget.addItems(self.message2)
+        self.ui.listWidget.addItem("")
         self.ui.listWidget.addItems(self.message)
-        self.ui.listWidget.addItem(str(self.result))
+        # self.ui.listWidget.addItems(self.result)
+        print(self.result)
+        self.ui.tabWidget.setCurrentIndex(1)
 
 
 if __name__ == '__main__':

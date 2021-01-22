@@ -9,50 +9,51 @@ class HataKontrolleri:
         self.Tezi_Ac()
 
     def Kontrol_Baslat(self):
-        islem_numarasi = 11
+        islem_numarasi = []
         message = []
         if (self.Baslik_Kontrolu(self.tez_nesnesi.tez_basligi) == False):
-            islem_numarasi = 1
-            message.append("Başlıktaki Her Kelimenin Baş Harfi Büyük Değil")
+            islem_numarasi.append(1)
+            message.append("1-Başlıktaki Her Kelimenin Baş Harfi Büyük Değil")
 
         if (self.Giris_Yazisi_Kontrolu(self.tez_nesnesi.giris_nesnesi.giris_yazisi) == False):
-            islem_numarasi = 7
-            message.append("Giriş Sayfasının İlk Paragrafında Teşekkür İbaresi Yer Alıyor")
+            islem_numarasi.append(7)
+            message.append("7-Giriş Sayfasının İlk Paragrafında Teşekkür İbaresi Yer Alıyor")
 
         if (self.Sekil_Sayfa_Uyum_Kontrolu(self.tez_nesnesi.sekiller_nesnesi) == False):
-            islem_numarasi = 2
-            message.append("Şekiller Listesindeki Şekil Tanımlaması Numarası İle Uyuşmuyor")
+            islem_numarasi.append(2)
+            message.append("2-Şekiller Listesindeki Şekil Tanımlaması Numarası İle Uyuşmuyor")
 
         if (self.Cizelge_Sayfa_Uyum_Kontrolu(self.tez_nesnesi.cizelgeler_nesnesi) == False):
-            islem_numarasi = 5
-            message.append("Çizelgeler Listesindeki Çizelge Tanımalaması Numarası İle Uyuşmuyor")
+            islem_numarasi.append(5)
+            message.append("5-Çizelgeler Listesindeki Çizelge Tanımalaması Numarası İle Uyuşmuyor")
 
         if (self.Denklem_Sayfa_Uyum_Kontrolu(self.tez_nesnesi.denklemler_nesnesi) == False):
-            islem_numarasi = 4
-            message.append("Denklemler Listesindeki Denklem Tanımalaması Numarası İle Uyuşmuyor")
+            islem_numarasi.append(4)
+            message.append("4-Denklemler Listesindeki Denklem Tanımalaması Numarası İle Uyuşmuyor")
 
         if (self.Tablo_Sayfa_Uyum_Kontrolu(self.tez_nesnesi.tablolar_nesnesi) == False):
-            islem_numarasi = 3
-            message.append("Tablolar Listesindeki Tablo Tanımlaması Numarası İle Uyuşmuyor")
+            islem_numarasi.append(3)
+            message.append("3-Tablolar Listesindeki Tablo Tanımlaması Numarası İle Uyuşmuyor")
 
         if (self.Referans_Kontrolu(self.tez_nesnesi.referanslar_nesnesi.referanslar_listesi,
                                    self.tez_nesnesi.icerik_nesnesi.sayfalar_listesi) == False):
-            islem_numarasi = 6
-            message.append("Referanslarda Tanımalanan Referans Tez İçerisinde Kullanılmamış")
+            islem_numarasi.append(6)
+            message.append("6-Referanslarda Tanımalanan Referans Tez İçerisinde Kullanılmamış")
 
         if (self.Icindekiler_Kontrolu(self.tez_nesnesi.icindekiler_nesnesi) == False):
-            islem_numarasi = 10
-            message.append("İçindekiler Kısmındaki Sayfa Numaraları Doğru Değil")
+            islem_numarasi.append(10)
+            message.append("10-İçindekiler Kısmındaki Sayfa Numaraları Doğru Değil")
 
         if (self.Cift_Tirnak_Kontrolu(self.tez_nesnesi.icerik_nesnesi.sayfalar_listesi) == False):
-            islem_numarasi = 8
-            message.append("İki Adet Çift Tırnak Arasında 50 Kelimeden Fazla Kelime Kullanılmış")
+            islem_numarasi.append(8)
+            message.append("8-İki Adet Çift Tırnak Arasında 50 Kelimeden Fazla Kelime Kullanılmış")
 
         if (self.Paragraf_Satir_Kontrolu(self.tez_nesnesi.icerik_nesnesi.sayfalar_listesi) == False):
-            islem_numarasi = 9
-            message.append("Paragraf İki Satır ve/veya İki Satırdan Daha Az Satırdan Oluşuyor")
+            islem_numarasi.append(9)
+            message.append("9-Paragraf İki Satır ve/veya İki Satırdan Daha Az Satırdan Oluşuyor")
         if len(message) < 1:
-            message.append("Herhangi bir sorun bulunamadı.")
+            message.append("11-Herhangi bir sorun bulunamadı.")
+            islem_numarasi = [11]
         return islem_numarasi, message
 
     def Baslik_Kontrolu(self, baslik_yazisi):
@@ -163,5 +164,5 @@ class HataKontrolleri:
         return True
 
     def Tezi_Ac(self):
-        print(self.pdf_nesnesi)
         self.pdf_nesnesi = fitz.open(self.tez_yolu)
+        print(self.pdf_nesnesi)

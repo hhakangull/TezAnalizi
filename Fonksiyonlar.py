@@ -5,8 +5,7 @@ class Icindekiler:
         eleman_yazisi = eleman_yazisi.split(" ")
         sayfa_numarasi = int(eleman_yazisi[-1]) - 1 + tez_baslangic_sayfasi
         baslik = ""
-        for i in range(len(eleman_yazisi) - 1):
-            baslik = baslik + eleman_yazisi[i] + " "
+        baslik = eleman_yazisi[0]
         icerik = baslik.strip()
         self.icindekiler_listesi[icerik] = sayfa_numarasi
 
@@ -18,8 +17,7 @@ class Sekiller:
         eleman_yazisi = eleman_yazisi.split(" ")
         sayfa_numarasi = int(eleman_yazisi[-1]) - 1 + tez_baslangic_sayfasi
         baslik = ""
-        for i in range(len(eleman_yazisi) - 1):
-            baslik = baslik + eleman_yazisi[i] + " "
+        baslik = eleman_yazisi[0]
         icerik = baslik.strip()
         self.sekiller_listesi[icerik] = sayfa_numarasi
 
@@ -31,8 +29,7 @@ class Tablolar:
         eleman_yazisi = eleman_yazisi.split(" ")
         sayfa_numarasi = int(eleman_yazisi[-1]) - 1 + tez_baslangic_sayfasi
         baslik = ""
-        for i in range(len(eleman_yazisi) - 1):
-            baslik = baslik + eleman_yazisi[i] + " "
+        baslik = eleman_yazisi[0]
         icerik = baslik.strip()
         self.tablolar_listesi[icerik] = sayfa_numarasi
 
@@ -44,8 +41,7 @@ class Denklemler:
         eleman_yazisi = eleman_yazisi.split(" ")
         sayfa_numarasi = int(eleman_yazisi[-1]) - 1 + tez_baslangic_sayfasi
         baslik = ""
-        for i in range(len(eleman_yazisi) - 1):
-            baslik = baslik + eleman_yazisi[i] + " "
+        baslik = eleman_yazisi[0]
         icerik = baslik.strip()
         self.denklemler_listesi[icerik] = sayfa_numarasi
 
@@ -55,7 +51,7 @@ class Referanslar:
 
     def eleman_ekle(self, eleman_yazisi):
         if (eleman_yazisi != "KAYNAKÇA"):
-            self.referanslar_listesi.append(eleman_yazisi[0:7])
+            self.referanslar_listesi.append(eleman_yazisi[0:5])
 
 
 class Cizelgeler:
@@ -65,8 +61,7 @@ class Cizelgeler:
         eleman_yazisi = eleman_yazisi.split(" ")
         sayfa_numarasi = int(eleman_yazisi[-1]) - 1 + tez_baslangic_sayfasi
         baslik = ""
-        for i in range(len(eleman_yazisi) - 1):
-            baslik = baslik + eleman_yazisi[i] + " "
+        baslik = eleman_yazisi[0]
         icerik = baslik.strip()
         self.cizelgeler_listesi[icerik] = sayfa_numarasi
 
