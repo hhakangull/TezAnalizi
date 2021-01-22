@@ -3,6 +3,7 @@ from PyQt5.QtGui import QIntValidator, QDoubleValidator
 from PyQt5.QtWidgets import QMainWindow, QApplication, QFileDialog, QMessageBox
 
 from ui_arayuz import Ui_MainWindow
+import time
 
 
 class MainWindow(QMainWindow):
@@ -14,8 +15,10 @@ class MainWindow(QMainWindow):
         self.initSlots()
         self.initParameters()
         self.test()
+
         self.ui.btn_pdf_analiz_yap.setEnabled(True)
         self.ui.listWidget.setStyleSheet("color: rgb(255, 255, 255);")
+        self.show()
 
     def control(self):
         if len(self.ui.txt_dosya_yolu.text()) < 5:
@@ -38,18 +41,14 @@ class MainWindow(QMainWindow):
         self.ui.btn_dosya_sec.clicked.connect(self.dosya_sec)
         self.ui.action_dosya_sec.triggered.connect(self.dosya_sec)
         self.ui.btn_pdf_analiz_yap.clicked.connect(self.getParameters)
-        self.ui.action_kilavuz.triggered.connect(self.kilavuz)
+        self.ui.action_gelistiriciler.triggered.connect(self.kilavuz)
 
     def kilavuz(self):
-        print("asdasd")
-        print("test")
         self.msg = QMessageBox()
         self.msg.setIcon(QMessageBox.Information)
-        self.msg.setText("UZUN Birşeyler yazılacak                                                      ")
-        self.msg.setInformativeText("This is additional information")
-        self.msg.setWindowTitle("Kullanım Kılavuzu")
-        self.msg.setDetailedText(
-            "The details are as follows:\nThe details are as follows:\nThe details are as follows:")
+        self.msg.setWindowTitle("Projedeki Kişiler")
+        self.msg.setText("Geliştiriciler                                                      ")
+        self.msg.setInformativeText("TUGAY AYAR\nAKIN BURAK YAZLIK\nMUHAMMET YASİN YILDIZ\nİSMAİL ÇAĞAN")
         self.msg.show()
 
     def self_setup_ui(self):

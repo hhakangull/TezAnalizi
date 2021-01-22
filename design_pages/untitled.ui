@@ -6,28 +6,28 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1002</width>
+    <width>1000</width>
     <height>525</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>100</width>
-    <height>510</height>
+    <width>1000</width>
+    <height>525</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>5000</width>
-    <height>3000</height>
+    <width>1000</width>
+    <height>525</height>
    </size>
   </property>
   <property name="windowTitle">
    <string>Tez Analiz Programı</string>
   </property>
   <property name="windowIcon">
-   <iconset>
-    <normaloff>../icon.png</normaloff>../icon.png</iconset>
+   <iconset resource="../resource.qrc">
+    <normaloff>:/resimler/icons/iconx.ico</normaloff>:/resimler/icons/iconx.ico</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QFrame" name="frame">
@@ -185,7 +185,7 @@ Dökümanın içindekiler kısmının sayfa numaraları burada kullanılamaz.</s
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>../2613204-200.png</pixmap>
+      <pixmap resource="../resource.qrc">:/resimler/icons/2613204-200.png</pixmap>
      </property>
     </widget>
     <widget class="QWidget" name="horizontalLayoutWidget">
@@ -356,7 +356,7 @@ Dökümanın içindekiler kısmının sayfa numaraları burada kullanılamaz.</s
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1002</width>
+     <width>1000</width>
      <height>26</height>
     </rect>
    </property>
@@ -366,19 +366,19 @@ Dökümanın içindekiler kısmının sayfa numaraları burada kullanılamaz.</s
     </property>
     <addaction name="action_dosya_sec"/>
    </widget>
-   <widget class="QMenu" name="menuYard_m">
+   <widget class="QMenu" name="menuHakkinda">
     <property name="title">
-     <string>Yardım</string>
+     <string>Hakkında</string>
     </property>
-    <addaction name="action_kilavuz"/>
+    <addaction name="action_gelistiriciler"/>
    </widget>
    <addaction name="menuMen"/>
-   <addaction name="menuYard_m"/>
+   <addaction name="menuHakkinda"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
-  <action name="action_kilavuz">
+  <action name="action_gelistiriciler">
    <property name="text">
-    <string>Kılavuz</string>
+    <string>Geliştiriciler</string>
    </property>
   </action>
   <action name="action_dosya_sec">
@@ -387,6 +387,8 @@ Dökümanın içindekiler kısmının sayfa numaraları burada kullanılamaz.</s
    </property>
   </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="../resource.qrc"/>
+ </resources>
  <connections/>
 </ui>

@@ -3,7 +3,7 @@
 block_cipher = None
 
 
-a = Analysis(['main.py'],
+a = Analysis(['E:/TezAnalizi/main.py'],
              pathex=['E:\\TezAnalizi'],
              binaries=[],
              datas=[],
@@ -30,4 +30,4 @@ exe = EXE(pyz,
           upx=True,
           upx_exclude=[],
           runtime_tmpdir=None,
-          console=True )
+          console=False , icon='E:\\TezAnalizi\\icons\\iconx.ico')
